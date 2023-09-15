@@ -13,18 +13,13 @@ void set_CF_add(uint32_t res, uint32_t src, size_t data_size) {
 void set_PF(uint32_t res) {
     int cnt1 = 8, cnt2 = 0;
     uint8_t temp = sign_ext(res, 8);
-    // printf("res = 0x%x\n", res);
-    // printf("temp = 0x%x\n", temp);
     while (cnt1--) {
         uint8_t temp2 = temp << cnt1;
-        // printf("1: temp2 = 0x%x\n", temp2);
         temp2 = temp2 >> 7;
-        // printf("2: temp2 = 0x%x\n", temp2);
         if (temp2) {
             cnt2++;
         }
     }
-    // printf("cnt2 = %d\n", cnt2);
     cpu.eflags.PF = cnt2 % 2 ? 0 : 1;
 }
 
@@ -74,10 +69,9 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_adc(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+    uint32_t res = src + dest + cpu.
+    
+    
 #endif
 }
 

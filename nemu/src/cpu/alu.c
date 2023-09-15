@@ -58,6 +58,7 @@ void set_CF_sub(uint32_t res, uint32_t src, size_t data_size) {
 }
 
 uint32_t take_reverse(uint32_t num, size_t data_size) {
+    printf("0:num = 0x%x\n", num);
     num = sign_ext(num & (0xFFFFFFFF >> (32 - data_size)), data_size);
     printf("1: num = 0x%x\n", num);
     num = ~num + 1;

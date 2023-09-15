@@ -3,6 +3,7 @@
 
 #include <cpu-ref/alu_ref.h>
 
+
 // enable NEMU_REF_ALU to use reference implementation
 // #define NEMU_REF_ALU
 
@@ -68,5 +69,6 @@ inline uint64_t sign_ext_64(uint32_t x, size_t data_size)
                 return (int64_t)((int32_t)x);
         }
 }
+
 
 #endif

@@ -1,14 +1,64 @@
-#include "cpu/cpu.h"
+#include "../../include/cpu/cpu.h"
+#include "../../include/cpu/alu.h"
+extern CPU_STATE cpu;
 
+
+void set_CF_add(uint32_t res, uint32_t src, size_t data_size) {
+    res = sign_ext(res & (0xFFFFFFFF >> (32 - data_size)));
+    src = sign_ext(src & (0xFFFFFFFF >> (32 - data_size)));
+    cpu.eflags.CF = res < src;
+}
+
+void set_PF(uint32_t res) {
+    int cnt1 = 8, cnt2 = 0;
+    uint8_t temp = sign_ext(res, 8);
+    while (cnt1--) {
+        uint8_t temp2 = temp << cnt1;
+        if (sign(temp2)) {
+            cnt2++;
+        }
+    }
+    cpu.eflags.PF = cnt2 % 2 ? 0 : 1;
+}
+
+void set_ZF(uint32_t res, size_t data_size) {
+    res = res & (0xFFFFFFFF >> (32 - data_size));
+    cpu.eflags.ZF = (res == 0);
+}
+	
+void set_SF(uint32_t res, size_t data_size) {
+    res = sign_ext(res & (0xFFFFFFFF >> (32 - data_size)), data_size);
+    cpu.eflags.SF = sign(res);
+}
+
+void set_OF_add(uint32_t res, uint32_t src, uint32_t dest, size_t data_size) {
+    res = sign_ext(res & (0xFFFFFFFF >> (32 - data_size)), data_size);
+    src = sign_ext(src & (0xFFFFFFFF >> (32 - data_size)), data_size);
+    dest = sign_ext(dest & (0xFFFFFFFF >> (32 - data_size)), data_size);
+    if (sign(src) != sign(dest)) {
+        cpu.eflags.OF = 0;
+    }
+    else {
+        cpu.eflags.OF = sign(res) != sign(src) ?  1 : 0;
+    }
+}
+
+// ================= my personal define above =================
+
+// ================= real code below ====================
 uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 {
 #ifdef NEMU_REF_ALU
 	return __ref_alu_add(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+    uint32_t res = 0;
+    res = src + dest;
+    set_CF_add(res, src, data_size);   // 设置标志位
+	set_PF(res);                       // 偶数个1时，置1 
+	set_ZF(res, data_size);
+	set_SF(res, data_size);
+	set_OF_add(res, src, dest, data_size);
+    return res & (0xFFFFFFFF >> (32 - data_size)); // 高位清零
 #endif
 }
 

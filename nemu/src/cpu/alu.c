@@ -57,6 +57,12 @@ uint32_t take_reverse(uint32_t num, size_t data_size) {
     return num;
 }
 
+void set_CF_sub(uint32_t res, uint32_t src, size_t data_size) {
+    res = sign_ext(res & (0xFFFFFFFF >> (32 - data_size)), data_size);
+    src = sign_ext(src & (0xFFFFFFFF >> (32 - data_size)), data_size);
+    cpu.eflags.CF = (res > src) ? 1 : 0;
+}
+
 
 // ================= my personal define above =================
 

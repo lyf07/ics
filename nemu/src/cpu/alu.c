@@ -110,8 +110,10 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 	set_ZF(res, data_size);
 	set_SF(res, data_size);
 	set_OF_add(res, src, dest, data_size);
+	printf("res = 0x%x\n", res)
+	printf("sr")
 	printf("res = 0x%x\n", res);
-	printf("mytest = 0x%x\n", res + temp);
+	printf("mytest = 0x%x\n", src + temp);
     return res & (0xFFFFFFFF >> (32 - data_size)); // 高位清零
 #endif
 }

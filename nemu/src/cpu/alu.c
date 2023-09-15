@@ -104,7 +104,7 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sub(src, dest, data_size);
 #else
-    uint32_t temp = take_reverse(src, data_size);
+    // uint32_t temp = take_reverse(src, data_size);
     uint32_t res = src - dest;
     set_CF_sub(res, src, data_size);   // 设置标志位
 	set_PF(res);                       // 偶数个1时，置1 

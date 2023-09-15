@@ -52,6 +52,11 @@ void set_CF_adc(uint32_t res, uint32_t src, size_t data_size) {
     cpu.eflags.CF = (cpu.eflags.CF == 1) ? res <= src : res < src;
 }
 
+uint32_t take_reverse(uint32_t num, size_t data_size) {
+    num = ~num + 1;
+    return num;
+}
+
 
 // ================= my personal define above =================
 
@@ -61,8 +66,7 @@ uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_add(src, dest, data_size);
 #else
-    uint32_t res = 0;
-    res = src + dest;
+    uint32_t res = src + dest;
     set_CF_add(res, src, data_size);   // 设置标志位
 	set_PF(res);                       // 偶数个1时，置1 
 	set_ZF(res, data_size);
@@ -92,10 +96,14 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sub(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+    uint32_t temp = take_reverse(src);
+    uint32_t res = temp + dest + cpu.eflags.CF;
+    set_CF_adc(res, src, data_size);   // 设置标志位
+	set_PF(res);                       // 偶数个1时，置1 
+	set_ZF(res, data_size);
+	set_SF(res, data_size);
+	set_OF_add(res, src, dest, data_size);
+    return res & (0xFFFFFFFF >> (32 - data_size)); // 高位清零
 #endif
 }
 

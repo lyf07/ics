@@ -1,6 +1,6 @@
 #include "../../include/cpu/cpu.h"
 #include "../../include/cpu/alu.h"
-#include <iostream>
+#include <stdio.h>
 extern CPU_STATE cpu;
 
 
@@ -13,14 +13,14 @@ void set_CF_add(uint32_t res, uint32_t src, size_t data_size) {
 void set_PF(uint32_t res) {
     int cnt1 = 8, cnt2 = 0;
     uint8_t temp = sign_ext(res, 8);
-    std::cout << "res = " << res << endl;
+    printf("cnt2 = %d", cnt2);
     while (cnt1--) {
         uint8_t temp2 = temp << cnt1;
         if (sign(temp2)) {
             cnt2++;
         }
     }
-    std
+    printf("cnt2 = %d", cnt2);
     cpu.eflags.PF = cnt2 % 2 ? 0 : 1;
 }
 

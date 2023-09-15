@@ -58,6 +58,7 @@ void set_CF_sub(uint32_t res, uint32_t src, size_t data_size) {
 }
 
 uint32_t take_reverse(uint32_t num, size_t data_size) {
+    num = num & (0xFFFFFFFF >> (32 - data_size));
     num = ~num + 1;
     return num;
 }

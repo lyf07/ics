@@ -102,7 +102,7 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_sub(src, dest, data_size);
 #else
     uint32_t temp = take_reverse(dest, data_size);
-    uint32_t res = src + temp + cpu.eflags.CF;
+    uint32_t res = src + temp + 1;
     set_CF_sub(res, src, data_size);   // 设置标志位
 	set_PF(res);                       // 偶数个1时，置1 
 	set_ZF(res, data_size);

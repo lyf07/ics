@@ -45,24 +45,15 @@ void set_OF_add(uint32_t res, uint32_t src, uint32_t dest, size_t data_size) {
     }
 }
 
+
 void set_CF_adc(uint32_t res, uint32_t src, size_t data_size) {
     res = sign_ext(res & (0xFFFFFFFF >> (32 - data_size)), data_size);
     src = sign_ext(src & (0xFFFFFFFF >> (32 - data_size)), data_size);
     cpu.eflags.CF = (cpu.eflags.CF == 1) ? res <= src : res < src;
 }
 
-void set_CF_sub(uint32_t res, uint32_t src, size_t data_size) {
-    res = sign_ext(res & (0xFFFFFFFF >> (32 - data_size)), data_size);
-    src = sign_ext(src & (0xFFFFFFFF >> (32 - data_size)), data_size);
-    cpu.eflags.CF = res > src;
-}
-
 uint32_t take_reverse(uint32_t num, size_t data_size) {
-    printf("0:num = 0x%x\n", num);
-    num = sign_ext(num & (0xFFFFFFFF >> (32 - data_size)), data_size);
-    printf("1: num = 0x%x\n", num);
     num = ~num + 1;
-    printf("2: num = 0x%x\n", num);
     return num;
 }
 
@@ -103,21 +94,15 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 {
 #ifdef NEMU_REF_ALU
-    printf( "answer = 0x%x\n", __ref_alu_sub(src, dest, data_size));
 	return __ref_alu_sub(src, dest, data_size);
 #else
-    uint32_t temp = take_reverse(dest, data_size);
-    uint32_t res = src - dest;
-    set_CF_sub(res, src, data_size);   // 设置标志位
+    uint32_t temp = take_reverse(src);
+    uint32_t res = temp + dest + cpu.eflags.CF;
+    set_CF_adc(res, src, data_size);   // 设置标志位
 	set_PF(res);                       // 偶数个1时，置1 
 	set_ZF(res, data_size);
 	set_SF(res, data_size);
 	set_OF_add(res, src, dest, data_size);
-	printf("temp = 0x%x\n", temp);
-	printf("src = 0x%x\n", src);
-	printf("dest = 0x%x\n", dest);
-	printf("res = 0x%x\n", res);
-	printf("mytest = 0x%x\n===================\n", src + temp);
     return res & (0xFFFFFFFF >> (32 - data_size)); // 高位清零
 #endif
 }

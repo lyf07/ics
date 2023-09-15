@@ -16,7 +16,8 @@ void set_PF(uint32_t res) {
     printf("res = %d\n", res);
     while (cnt1--) {
         uint8_t temp2 = temp << cnt1;
-        if (sign(temp2)) {
+        temp2 = temp >> 7;
+        if (temp2) {
             cnt2++;
         }
     }

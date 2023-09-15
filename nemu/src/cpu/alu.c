@@ -14,9 +14,11 @@ void set_PF(uint32_t res) {
     int cnt1 = 8, cnt2 = 0;
     uint8_t temp = sign_ext(res, 8);
     printf("res = 0x%x\n", res);
+    printf("temp = 0x%x\n", temp);
     while (cnt1--) {
         uint8_t temp2 = temp << cnt1;
         temp2 = temp >> 7;
+        printf()
         if (temp2) {
             cnt2++;
         }

@@ -45,6 +45,14 @@ void set_OF_add(uint32_t res, uint32_t src, uint32_t dest, size_t data_size) {
     }
 }
 
+
+void set_CF_adc(uint32_t res, uint32_t src, size_t data_size) {
+    res = sign_ext(res & (0xFFFFFFFF >> (32 - data_size)), data_size);
+    src = sign_ext(src & (0xFFFFFFFF >> (32 - data_size)), data_size);
+    cpu.eflags.CF = res <= src;
+}
+
+
 // ================= my personal define above =================
 
 // ================= real code below ====================
@@ -69,7 +77,13 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_adc(src, dest, data_size);
 #else
-    uint32_t res = src + dest + cpu.
+    uint32_t res = src + dest + cpu.eflags.CF;
+    set_CF_adc(res, src, data_size);   // 设置标志位
+    set_PF(res);                       // 偶数个1时，置1
+    set_ZF(res, data_size);
+    set_SF(res, data_size);
+    set_OF_add(res, src, dest, data_size);
+    return res & (0xFFFFFFFF >> (32 - data_size));
     
     
 #endif

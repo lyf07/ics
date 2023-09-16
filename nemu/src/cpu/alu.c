@@ -88,6 +88,15 @@ void set_CF_sbb(uint32_t res, uint32_t src, size_t data_size) {
     cpu.eflags.CF = (cpu.eflags.CF == 1) ? res >= src : res > src;
 }
 
+void set_CF_mv(uint32_t res, uint32_t src, uint32_t dest, size_t data_size) {
+    if (src == 0) {
+        cpu.eflags.CF = 0;
+        return;
+    }
+    dest = sign_ext(dest << (src - 1), data_size);
+    cpu.eflags.CF = sign(dest);
+}
+
 
 // ================= my personal define above =================
 
@@ -275,10 +284,13 @@ uint32_t alu_shl(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_shl(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+    dest = dest & (0xFFFFFFFF >> (32 - data_size));
+    uint32_t res = dest << src;
+    set_CF_mv(res, src, dest, data_size);
+    set_PF(res);                       // 偶数个1时，置1 
+	set_ZF(res, data_size);
+	set_SF(res, data_size);
+    return res & (0xFFFFFFFF >> (32 - data_size));
 #endif
 }
 
@@ -311,9 +323,6 @@ uint32_t alu_sal(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sal(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+    return alu_shl(src, dest, data_size);
 #endif
 }

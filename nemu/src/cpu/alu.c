@@ -226,7 +226,7 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_mul(src, dest, data_size);
 #else
 	uint64_t res = (uint64_t)src * dest;
-	printf("res = 0x%x\n", res);
+	printf("res = 0x%llx\n", res);
 	set_CF_mul(res, data_size);   // 设置标志位
 	set_PF(res);                       // 偶数个1时，置1 
 	set_ZF(res, data_size);

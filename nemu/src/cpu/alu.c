@@ -67,17 +67,18 @@ void set_OF_sbb(uint32_t res, uint32_t src, uint32_t dest, size_t data_size) {
 void set_OF_mul(uint64_t res, size_t data_size) {
     switch(data_size) {
         case 8:
-            typedef myint uint8_t;
+            uint8_t temp = myint(res >> data_size);
+            cpu.eflags.OF = temp != 0;
             break;
         case 16:
-            typedef myint uint16_t;
+            uint16_t temp = myint(res >> data_size);
+            cpu.eflags.OF = temp != 0;
             break;
         case 32:
-            typedef myint uint32_t;
+            uint32_t temp = myint(res >> data_size);
+            cpu.eflags.OF = temp != 0;
             break;
     }
-    myint temp = myint(res >> data_size);
-    cpu.eflags.OF = temp != 0;
 }
 
 void set_CF_add(uint32_t res, uint32_t src, size_t data_size) {

@@ -222,13 +222,13 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_mul(src, dest, data_size);
 #else
-	uint64_t res = src * dest;
+	uint64_t res = (uint64_t)src * dest;
 	set_CF_mul(res, data_size);   // 设置标志位
 	set_PF(res);                       // 偶数个1时，置1 
 	set_ZF(res, data_size);
 	set_SF(res, data_size);
 	set_OF_mul(res, data_size);
-	printf("here\n");
+	printf("here2\n");
 	return res;
 #endif
 }

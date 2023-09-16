@@ -327,12 +327,11 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
     int32_t temp = dest << (32 - data_size);
     temp = temp >> src;
     uint32_t res = (uint32_t)temp >> (32 - data_size);
-    printf("src = 0x%x\n", src);
-    printf("dest = 0x%x\n", dest);
-    printf("data_size = 0x%x\n", data_size);
-    printf("temp = 0x%x\n", temp);
-    printf("temp2 = 0x%x\n", temp2);
-    printf("0: res = 0x%x\n", res);
+    // printf("src = 0x%x\n", src);
+    // printf("dest = 0x%x\n", dest);
+    // printf("data_size = 0x%x\n", data_size);
+    // printf("temp = 0x%x\n", temp);
+    // printf("0: res = 0x%x\n", res);
     set_CF_mvr(res, src, dest, data_size);
     set_PF(res);                       // 偶数个1时，置1 
 	set_ZF(res, data_size);

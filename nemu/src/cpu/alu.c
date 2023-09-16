@@ -82,7 +82,7 @@ void set_OF_mul(uint64_t res, size_t data_size) {
             break;
         }
     }
-    printf("cpu.eflags.CF = %d", cpu.eflags.CF);
+    printf("cpu.eflags.CF = %d\n", cpu.eflags.CF);
 }
 
 void set_CF_add(uint32_t res, uint32_t src, size_t data_size) {
@@ -148,7 +148,7 @@ void set_CF_mul(uint64_t res, size_t data_size) {
             break;
         }
     }
-    printf("cpu.eflags.OF = %d", cpu.eflags.OF);
+    printf("cpu.eflags.OF = %d\n", cpu.eflags.OF);
 } 
 
 

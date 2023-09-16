@@ -132,19 +132,19 @@ void set_CF_mul(uint64_t res, size_t data_size) {
         case 8: {
             uint8_t temp = (uint8_t)(res >> data_size);
             printf("temp = 0x%x\n", temp);
-            cpu.eflags.OF = temp != 0;
+            cpu.eflags.CF = temp != 0;
             break;
         }
         case 16: {
             uint16_t temp1 = (uint16_t)(res >> data_size);
             printf("temp1 = 0x%x\n", temp1);
-            cpu.eflags.OF = temp1 != 0;
+            cpu.eflags.CF = temp1 != 0;
             break;
         }
         case 32: {
             uint32_t temp2 = (uint32_t)(res >> data_size);
             printf("temp2 = 0x%x\n", temp2);
-            cpu.eflags.OF = temp2 != 0;
+            cpu.eflags.CF = temp2 != 0;
             break;
         }
     }

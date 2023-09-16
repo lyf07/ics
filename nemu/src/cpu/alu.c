@@ -57,23 +57,34 @@ void set_OF_sub(uint32_t res, uint32_t src, uint32_t dest, size_t data_size) {
     }
 }
 
-
+void set_OF_sbb(uint32_t res, uint32_t src, uint32_t dest, size_t data_size) {
+    res = sign_ext(res & (0xFFFFFFFF >> (32 - data_size)), data_size);
+    src = sign_ext(src & (0xFFFFFFFF >> (32 - data_size)), data_size);
+    dest = sign_ext(dest & (0xFFFFFFFF >> (32 - data_size)), data_size);
+    if (sign(src) == sign(dest)) {
+        cpu.eflags.OF = 0;
+    }
+    else {
+        cpu.eflags.OF = sign(res) != sign(dest) ?  1 : 0;
+    }
+}
 
 void set_CF_adc(uint32_t res, uint32_t src, size_t data_size) {
     res = sign_ext(res & (0xFFFFFFFF >> (32 - data_size)), data_size);
     src = sign_ext(src & (0xFFFFFFFF >> (32 - data_size)), data_size);
     cpu.eflags.CF = (cpu.eflags.CF == 1) ? res <= src : res < src;
-}
 
-uint32_t take_reverse(uint32_t num, size_t data_size) {
-    num = ~num + 1;
-    return num;
-}
 
 void set_CF_sub(uint32_t res, uint32_t src, size_t data_size) {
     res = sign_ext(res & (0xFFFFFFFF >> (32 - data_size)), data_size);
     src = sign_ext(src & (0xFFFFFFFF >> (32 - data_size)), data_size);
     cpu.eflags.CF = (res > src) ? 1 : 0;
+}
+
+void set_CF_sbb(uint32_t res, uint32_t src, size_t data_size) {
+    res = sign_ext(res & (0xFFFFFFFF >> (32 - data_size)), data_size);
+    src = sign_ext(src & (0xFFFFFFFF >> (32 - data_size)), data_size);
+    cpu.eflags.CF = (res >= src) ? 1 : 0;
 }
 
 
@@ -133,10 +144,15 @@ uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sbb(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+    uint32_t res = dest - src - cpu.eflags.CF;
+    // printf("0:res = 0x%x\n", res);
+    set_CF_sbb(res, dest, data_size);   // 设置标志位
+    // printf("1:res = 0x%x\n", res);
+	set_PF(res);                       // 偶数个1时，置1 
+	set_ZF(res, data_size);
+	set_SF(res, data_size);
+	set_OF_sub(res, src, dest, data_size);
+    return res & (0xFFFFFFFF >> (32 - data_size)); // 高位清零
 #endif
 }
 

@@ -130,16 +130,19 @@ void set_CF_mul(uint64_t res, size_t data_size) {
     switch(data_size) {
         case 8: {
             uint8_t temp = (uint8_t)(res >> data_size);
+            printf("temp = 0x%x\n", temp);
             cpu.eflags.OF = temp != 0;
             break;
         }
         case 16: {
             uint16_t temp1 = (uint16_t)(res >> data_size);
+            printf("temp1 = 0x%x\n", temp1);
             cpu.eflags.OF = temp1 != 0;
             break;
         }
         case 32: {
             uint32_t temp2 = (uint32_t)(res >> data_size);
+            printf("temp2 = 0x%x\n", temp2);
             cpu.eflags.OF = temp2 != 0;
             break;
         }
@@ -223,6 +226,7 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_mul(src, dest, data_size);
 #else
 	uint64_t res = (uint64_t)src * dest;
+	printf("res = 0x%x\n", res);
 	set_CF_mul(res, data_size);   // 设置标志位
 	set_PF(res);                       // 偶数个1时，置1 
 	set_ZF(res, data_size);

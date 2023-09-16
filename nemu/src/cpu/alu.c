@@ -326,7 +326,7 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 
     int32_t temp = dest << (32 - data_size);
     temp = temp >> src;
-    uint32_t temp2 = (uint32_t)temp >> (32 - data_size);
+    uint32_t res = (uint32_t)temp >> (32 - data_size);
     printf("src = 0x%x\n", src);
     printf("dest = 0x%x\n", dest);
     printf("data_size = 0x%x\n", data_size);
@@ -338,7 +338,7 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 	set_ZF(res, data_size);
 	set_SF(res, data_size);
 	printf("1: res = 0x%x\n", res);
-    return temp2;
+    return res;
 #endif
 }
 

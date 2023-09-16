@@ -323,10 +323,12 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sar(src, dest, data_size);
 #else
+
     uint32_t temp = (uint32_t)sign_ext(dest, data_size);
     uint32_t res = dest & (0xFFFFFFFF << data_size);
     printf("src = 0x%x\n", src);
     printf("dest = 0x%x\n", dest);
+    printf("data_size = 0x%x\n", data_size);
     res += temp;
     set_CF_mvr(res, src, dest, data_size);
     set_PF(res);                       // 偶数个1时，置1 

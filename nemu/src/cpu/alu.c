@@ -53,7 +53,7 @@ void set_OF_sub(uint32_t res, uint32_t src, uint32_t dest, size_t data_size) {
         cpu.eflags.OF = 0;
     }
     else {
-        cpu.eflags.OF = sign(res) != sign(src) ?  1 : 0;
+        cpu.eflags.OF = sign(res) != sign(dest) ?  1 : 0;
     }
 }
 
@@ -122,7 +122,7 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 	set_PF(res);                       // 偶数个1时，置1 
 	set_ZF(res, data_size);
 	set_SF(res, data_size);
-	set_OF_add(res, src, dest, data_size);
+	set_OF_sub(res, src, dest, data_size);
     return res & (0xFFFFFFFF >> (32 - data_size)); // 高位清零
 #endif
 }

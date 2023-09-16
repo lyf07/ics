@@ -310,7 +310,7 @@ uint32_t alu_shr(uint32_t src, uint32_t dest, size_t data_size)
 #else
     dest = dest & (0xFFFFFFFF >> (32 - data_size));
     uint32_t res = dest >> src;
-    set_CF_mv(res, src, dest, data_size);
+    set_CF_mvr(res, src, dest, data_size);
     set_PF(res);                       // 偶数个1时，置1 
 	set_ZF(res, data_size);
 	set_SF(res, data_size);

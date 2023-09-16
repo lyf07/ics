@@ -71,12 +71,12 @@ void set_OF_mul(uint64_t res, size_t data_size) {
             cpu.eflags.OF = temp != 0;
             break;
         case 16:
-            uint16_t temp = myint(res >> data_size);
-            cpu.eflags.OF = temp != 0;
+            uint16_t temp1 = myint(res >> data_size);
+            cpu.eflags.OF = temp1 != 0;
             break;
         case 32:
             uint32_t temp = myint(res >> data_size);
-            cpu.eflags.OF = temp != 0;
+            cpu.eflags.OF = temp2 != 0;
             break;
     }
 }

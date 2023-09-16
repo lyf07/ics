@@ -336,7 +336,6 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
     set_PF(res);                       // 偶数个1时，置1 
 	set_ZF(res, data_size);
 	set_SF(res, data_size);
-	printf("1: res = 0x%x\n", res);
     return res;
 #endif
 }

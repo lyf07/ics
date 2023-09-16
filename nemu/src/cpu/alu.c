@@ -64,6 +64,22 @@ void set_OF_sbb(uint32_t res, uint32_t src, uint32_t dest, size_t data_size) {
     }
 }
 
+void set_OF_mul(uint64_t res, size_t data_size) {
+    switch(data_size) {
+        case 8:
+            typedef myint uint8_t;
+            break;
+        case 16:
+            typedef myint uint16_t;
+            break;
+        case 32:
+            typedef myint uint32_t;
+            break;
+    }
+    myint temp = myint(res >> data_size);
+    cpu.eflags.OF = temp != 0;
+}
+
 void set_CF_add(uint32_t res, uint32_t src, size_t data_size) {
     res = sign_ext(res & (0xFFFFFFFF >> (32 - data_size)), data_size);
     src = sign_ext(src & (0xFFFFFFFF >> (32 - data_size)), data_size);
@@ -105,6 +121,24 @@ void set_CF_mvr(uint32_t res, uint32_t src, uint32_t dest, size_t data_size) {
     dest = (dest >> (src - 1)) & 0x00000001;
     cpu.eflags.CF = (dest == 1) ? 1 : 0;
 }
+
+void set_CF_mul(uint64_t res, size_t data_size) {
+    switch(data_size) {
+        case 8:
+            typedef myint uint8_t;
+            break;
+        case 16:
+            typedef myint uint16_t;
+            break;
+        case 32:
+            typedef myint uint32_t;
+            break;
+    }
+    myint temp = myint(res >> data_size);
+    cpu.eflags.CF = temp != 0;
+} 
+
+
 
 
 // ================= my personal define above =================
@@ -180,10 +214,13 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_mul(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	uint64_t res = src * dest;
+	set_CF_mul(res, data_size);   // 设置标志位
+	set_PF(res);                       // 偶数个1时，置1 
+	set_ZF(res, data_size);
+	set_SF(res, data_size);
+	set_OF_mul(res, data_size);
+	return res & (0xFFFFFFFFFFFFFFFF >> (64 - data_size));
 #endif
 }
 
@@ -327,11 +364,6 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
     int32_t temp = dest << (32 - data_size);
     temp = temp >> src;
     uint32_t res = (uint32_t)temp >> (32 - data_size);
-    // printf("src = 0x%x\n", src);
-    // printf("dest = 0x%x\n", dest);
-    // printf("data_size = 0x%x\n", data_size);
-    // printf("temp = 0x%x\n", temp);
-    // printf("0: res = 0x%x\n", res);
     set_CF_mvr(res, src, dest, data_size);
     set_PF(res);                       // 偶数个1时，置1 
 	set_ZF(res, data_size);

@@ -326,7 +326,7 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 
     int32_t temp = dest << (32 - data_size);
     temp = temp >> src;
-    uint32_t temp2 = temp >> (32 - data_size);
+    uint32_t temp2 = (uint32_t)temp >> (32 - data_size);
     uint32_t res = dest & (0xFFFFFFFF << data_size);
     printf("src = 0x%x\n", src);
     printf("dest = 0x%x\n", dest);

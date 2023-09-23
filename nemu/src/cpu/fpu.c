@@ -11,6 +11,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 
 	// normalization
 	bool overflow = false; // true if the result is INFINITY or 0 during normalize
+	uint32_t sticky = 0;
 
 	if ((sig_grs >> (23 + 3)) > 1 || exp < 0)
 	{
@@ -22,18 +23,15 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		{
 
 			/* TODO: shift right, pay attention to sticky bit*/
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+			sticky = sticky | (sig_grs & 0x1);
+			sig_args >>= 1;
+			sig_args |= sticky;
 		}
 
 		if (exp >= 0xff)
 		{
 			/* TODO: assign the number to infinity */
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
-			overflow = true;
+            return sign ?  (0xff000000 >> 1 | 0x80000000) : (0xff000000 >> 1);
 		}
 		if (exp == 0)
 		{
@@ -58,18 +56,15 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		// normalize toward left
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		{
-			/* TODO: shift left */
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+			sig_grs << 1;
 		}
 		if (exp == 0)
 		{
 			// denormal
 			/* TODO: shift right, pay attention to sticky bit*/
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+            sticky = sig_args & 0x1;
+            sig_args >>= 1;
+            sig_args |= sticky;
 		}
 	}
 	else if (exp == 0 && sig_grs >> (23 + 3) == 1)
@@ -81,9 +76,28 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	if (!overflow)
 	{
 		/* TODO: round up and remove the GRS bits */
-		printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-		fflush(stdout);
-		assert(0);
+        uint32_t store = (sig_grs << 61) >> 61;
+        sig_grs >>= 3;
+        uint32_t low = sig_grs & 0x1;
+        bool flag = false;   // 是否进位
+        bool flag2 = false; // 是否破坏规格化
+        if (store > 0x4 || (store == 0x4 && low == 1)) {
+            flag = true;
+        }
+        if (flag) {     
+            uint32_t origin = (uint32_t)((sig_grs << 41) >> 41);
+            if (origin > origin + 1) {
+                flag2 = true;
+            }
+        }
+        if (flag2) {
+            exp++;
+            sig_grs >> 1;
+            if (exp >= 0xff) {   // 无穷大
+                 return sign ?  (0xff000000 >> 1 | 0x80000000) : (0xff000000 >> 1);
+            }
+            sig_args &= 0x70000; // 丢弃隐藏的最高位
+        }
 	}
 
 	FLOAT f;
@@ -155,7 +169,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 		sig_b |= 0x800000; // the hidden 1
 
 	// alignment shift for fa
-	uint32_t shift = fb.exponent - fa.exponent - 1;
+	uint32_t shift = (fb.exponent == 0 ? fb.exponent + 1 : fb.exponent) - (fa.exponent == 0 ? fa.exponent + 1 : fa.exponent);;
 
 	/* TODO: shift = ? */
 	sig_a = (sig_a << 3); // guard, round, sticky

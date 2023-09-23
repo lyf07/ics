@@ -12,17 +12,17 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	// normalization
 	bool overflow = false; // true if the result is INFINITY or 0 during normalize
 	uint32_t sticky = 0;
-    
+    printf("0: sign = 0x%u, exp = 0x%u, sig_grs = 0x%llx\n", sign, exp, sig_grs);
 	if ((sig_grs >> (23 + 3)) > 1 || exp < 0)
 	{
-	    
+	    printf("case1\n");
 		// normalize toward right
 		while ((((sig_grs >> (23 + 3)) > 1) && exp < 0xff) // condition 1
 			   ||										   // or
 			   (sig_grs > 0x04 && exp < 0)				   // condition 2
 			   )
 		{
-            
+            printf("case1:1\n");
 			/* TODO: shift right, pay attention to sticky bit*/
 			sticky = sticky | (sig_grs & 0x1);
 			sig_grs >>= 1;
@@ -31,13 +31,13 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		}
 		if (exp >= 0xff)
 		{
-		    
+		    printf("case1:2\n");
 			/* TODO: assign the number to infinity */
             return sign ?  (0xff000000 >> 1 | 0x80000000) : (0xff000000 >> 1);
 		}
 		if (exp == 0)
 		{
-		    
+		    printf("case1:3\n");
 			// we have a denormal here, the exponent is 0, but means 2^-126,
 			// as a result, the significand should shift right once more
 			/* TODO: shift right, pay attention to sticky bit*/
@@ -47,7 +47,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		}
 		if (exp < 0)
 		{
-		    
+		    printf("case1:4\n");
 			/* TODO: assign the number to zero */
 			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
 			fflush(stdout);
@@ -57,17 +57,17 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	}
 	else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)           
 	{
-	    
+	    printf("case2\n");
 		// normalize toward left
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		{
-		  //  printf("case2:1\n");
+		    printf("case2:1\n");
 			sig_grs <<= 1;
 			exp--;
 		}
 		if (exp == 0)
 		{
-		    
+		    printf("case2:2\n");
 			// denormal
 			/* TODO: shift right, pay attention to sticky bit*/
             sticky = sig_grs & 0x1;
@@ -78,19 +78,19 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	}
 	else if (exp == 0 && sig_grs >> (23 + 3) == 1)
 	{
-	    
+	    printf("case3\n");
 		// two denormals result in a normal
 		exp++;
 	}
 
 	if (!overflow)
 	{
-	    
+	    printf("1: sign = 0x%u, exp = 0x%u, sig_grs = 0x%llx, sticky = 0x%x\n", sign, exp, sig_grs, sticky);
 		/* TODO: round up and remove the GRS bits */
         uint32_t store = (sig_grs << 61) >> 61;
         sig_grs >>= 3;
         uint32_t low = sig_grs & 0x1;
-        
+        printf("store = 0x%x, sig_grs = 0x%llx\n", store, sig_grs);
         bool flag = false;   // 是否进位
         bool flag2 = false; // 是否破坏规格化
         if (store > 0x4 || (store == 0x4 && low == 1)) {
@@ -104,7 +104,8 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
             sig_grs += 1;
         }
         
-
+        printf("flag = %d\n", flag);
+        printf("flag2 = %d\n", flag2);
         if (flag2) {
             exp++;
             sig_grs >>= 1;
@@ -119,7 +120,8 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	f.sign = sign;
 	f.exponent = (uint32_t)(exp & 0xff);
 	f.fraction = sig_grs; // here only the lowest 23 bits are kept
-
+	printf("My answer is: sign: %d, exp: %d, fraction: 0x%x\n", f.sign, f.exponent, f.fraction);
+	printf("===============\n");
 	return f.val;
 }
 
@@ -140,7 +142,12 @@ CORNER_CASE_RULE corner_add[] = {
 // a + b
 uint32_t internal_float_add(uint32_t b, uint32_t a)
 {
-    
+    // FLOAT x, y, g;
+    // x.val = a;
+    // y.val = b;
+    // g.fval = x.fval + y.fval;
+    // printf("System's answer is: sign: %d, exp: %d, fraction: 0x%x\n", g.sign, g.exponent, g.fraction);
+    // return g.val;
     
     
     // ========= golden key ==========

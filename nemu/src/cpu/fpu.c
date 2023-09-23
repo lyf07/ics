@@ -22,7 +22,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			   (sig_grs > 0x04 && exp < 0)				   // condition 2
 			   )
 		{
-            
 			/* TODO: shift right, pay attention to sticky bit*/
 			sticky = sticky | (sig_grs & 0x1);
 			sig_grs >>= 1;
@@ -31,7 +30,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		}
 		if (exp >= 0xff)
 		{
-		    
 			/* TODO: assign the number to infinity */
             return sign ?  (0xff000000 >> 1 | 0x80000000) : (0xff000000 >> 1);
 		}
@@ -41,33 +39,25 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			// we have a denormal here, the exponent is 0, but means 2^-126,
 			// as a result, the significand should shift right once more
 			/* TODO: shift right, pay attention to sticky bit*/
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+			sticky = sticky | (uint32_t)((sig_grs << 63) >> 63);
+			sig_grs >>= 1;
 		}
 		if (exp < 0)
 		{
-		    
-			/* TODO: assign the number to zero */
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
-			overflow = true;
+		    sign *= -1;
+			exp = -exp;
 		}
 	}
 	else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)           
 	{
-	    
 		// normalize toward left
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		{
-		    
 			sig_grs <<= 1;
 			exp--;
 		}
 		if (exp == 0)
 		{
-		    
 			// denormal
 			/* TODO: shift right, pay attention to sticky bit*/
             sticky = sig_grs & 0x1;
@@ -89,7 +79,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
         uint32_t store = (sig_grs << 61) >> 61;
         sig_grs >>= 3;
         uint32_t low = sig_grs & 0x1;
-        
         bool flag = false;   // 是否进位
         bool flag2 = false; // 是否破坏规格化
         if (store > 0x4 || (store == 0x4 && low == 1)) {
@@ -97,14 +86,11 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
         }
         if (flag) {    
             uint32_t origin = (uint32_t)((sig_grs << 41) >> 41);
-            
             if (origin == 0x7FFFFF) {
                 flag2 = true;
             }
             sig_grs += 1;
         }
-        
-
         if (flag2) {
             exp++;
             sig_grs >>= 1;
@@ -114,12 +100,10 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
         }
         sig_grs &= 0x7FFFFF; // 丢弃隐藏的最高位
 	}
-
 	FLOAT f;
 	f.sign = sign;
 	f.exponent = (uint32_t)(exp & 0xff);
 	f.fraction = sig_grs; // here only the lowest 23 bits are kept
-
 	return f.val;
 }
 

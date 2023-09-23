@@ -63,7 +63,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		{
 		    printf("case2:1\n");
 			sig_grs <<= 1;
-			exp--;
+// 			exp--;
 		}
 		if (exp == 0)
 		{

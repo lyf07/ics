@@ -99,9 +99,8 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
         if (flag) {    
             uint32_t origin = (uint32_t)((sig_grs << 41) >> 41);
             printf("origin = 0x%x, origin + 1 = 0x%x\n", origin, origin + 1);
-            if (origin > origin + 1) {
+            if (origin == 0x7FFFFF) {
                 flag2 = true;
-                exp++;
             }
             sig_grs += 1;
         }
@@ -109,6 +108,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
         printf("flag = %d\n", flag);
         printf("flag2 = %d\n", flag2);
         if (flag2) {
+            exp++;
             sig_grs >>= 1;
             if (exp >= 0xff) {   // 无穷大
                  return sign ?  (0xff000000 >> 1 | 0x80000000) : (0xff000000 >> 1);

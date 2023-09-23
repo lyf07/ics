@@ -134,7 +134,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
     x.val = a;
     y.val = b;
     g.fval = x.fval + y.fval;
-    printf("System's answer is: sign: %d, exp: %d, fraction: %d\n", g.sign, g.exponent, g.fraction);
+    printf("System's answer is: sign: %d, exp: %d, fraction: 0x%x\n", g.sign, g.exponent, g.fraction);
     
     
     

@@ -306,7 +306,7 @@ uint32_t internal_float_mul(uint32_t b, uint32_t a)
 	uint32_t exp_res = 0;
 
 	/* TODO: exp_res = ? leave space for GRS bits. */
-    exp_res = fa.exponent + fb.exponent - 127 - 23;
+    exp_res = fa.exponent + fb.exponent - 127 - 23 + 3;
     // FLOAT c, d, e;
     // c.val = b, d.val = a;
     // e.fval = c.fval * d.fval;

@@ -61,7 +61,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		// normalize toward left
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		{
-		    printf("case2:1\n");
+		  //  printf("case2:1\n");
 			sig_grs <<= 1;
 // 			exp--;
 		}

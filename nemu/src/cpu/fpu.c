@@ -97,10 +97,10 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
             flag = true;
         }
         if (flag) {    
-            exp++;
             uint32_t origin = (uint32_t)((sig_grs << 41) >> 41);
             if (origin > origin + 1) {
                 flag2 = true;
+                exp++;
             }
             sig_grs += 1;
         }

@@ -104,7 +104,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	f.sign = sign;
 	f.exponent = (uint32_t)(exp & 0xff);
 	f.fraction = sig_grs; // here only the lowest 23 bits are kept
-	printf("My answer is: %f\n", f.val);
+	printf("My answer is: %f\n", f.fval);
 	return f.val;
 }
 
@@ -125,10 +125,10 @@ CORNER_CASE_RULE corner_add[] = {
 // a + b
 uint32_t internal_float_add(uint32_t b, uint32_t a)
 {
-    Float x, y;
+    FLOAT x, y;
     x.val = a;
     y.val = b;
-    printf("System's answer is: %f\n", x.val + y.val);
+    printf("System's answer is: %f\n", x.fval + y.fval);
     
     
     

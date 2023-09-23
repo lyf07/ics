@@ -108,7 +108,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	f.sign = sign;
 	f.exponent = (uint32_t)(exp & 0xff);
 	f.fraction = sig_grs; // here only the lowest 23 bits are kept
-	printf("My answer is: sign: %d, exp: %d, fraction: %d\n", f.sign, f.exponent, f.fraction);
+	printf("My answer is: sign: %d, exp: %d, fraction: 0x%x\n", f.sign, f.exponent, f.fraction);
 	printf("===============\n");
 	return f.val;
 }

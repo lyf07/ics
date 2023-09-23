@@ -55,7 +55,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			overflow = true;
 		}
 	}
-	else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
+	else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)           
 	{
 	    printf("case2\n");
 		// normalize toward left
@@ -147,7 +147,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
     y.val = b;
     g.fval = x.fval + y.fval;
     printf("System's answer is: sign: %d, exp: %d, fraction: 0x%x\n", g.sign, g.exponent, g.fraction);
-    
+    return g.val;
     
     
     // ========= golden key ==========

@@ -46,7 +46,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		if (exp < 0)
 		{
 		    return sign ? 0x80000000 : 0;
-// 			exp = -exp;
 		}
 	}
 	else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)           
@@ -105,8 +104,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	f.sign = sign;
 	f.exponent = (uint32_t)(exp & 0xff);
 	f.fraction = sig_grs; // here only the lowest 23 bits are kept
-//     printf("My answer is: sign:0x%x, exp:0x%x, fraction = 0x%x\n", f.sign, f.exponent, f.fraction);
-// 	printf("===============\n");
 	return f.val;
 }
 

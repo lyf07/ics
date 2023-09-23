@@ -108,7 +108,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
                  return sign ?  (0xff000000 >> 1 | 0x80000000) : (0xff000000 >> 1);
             }
         }
-        sig_grs &= 0x7FFFF; // 丢弃隐藏的最高位
+        sig_grs &= 0x7FFFFF; // 丢弃隐藏的最高位
 	}
 
 	FLOAT f;

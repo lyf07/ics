@@ -63,7 +63,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		{
 		    printf("case2:1\n");
 			sig_grs <<= 1;
-			exp++;
+			exp--;
 		}
 		if (exp == 0)
 		{
@@ -73,7 +73,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
             sticky = sig_grs & 0x1;
             sig_grs >>= 1;
             sig_grs |= sticky;
-            exp--;
+            exp++;
 		}
 	}
 	else if (exp == 0 && sig_grs >> (23 + 3) == 1)
@@ -147,7 +147,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
     // y.val = b;
     // g.fval = x.fval + y.fval;
     // printf("System's answer is: sign: %d, exp: %d, fraction: 0x%x\n", g.sign, g.exponent, g.fraction);
-    // return g.val;
+    //   return g.val;
     
     
     // ========= golden key ==========

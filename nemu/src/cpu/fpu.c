@@ -39,8 +39,9 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			// we have a denormal here, the exponent is 0, but means 2^-126,
 			// as a result, the significand should shift right once more
 			/* TODO: shift right, pay attention to sticky bit*/
-			sticky = sticky | (uint32_t)((sig_grs << 63) >> 63);
+			sticky = sticky | (sig_grs & 0x1);
 			sig_grs >>= 1;
+			sig_grs |= sticky;
 		}
 		if (exp < 0)
 		{

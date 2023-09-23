@@ -63,7 +63,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		{
 		    printf("case2:1\n");
 			sig_grs <<= 1;
-			exp--;
+			exp++;
 		}
 		if (exp == 0)
 		{
@@ -96,7 +96,8 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
         if (store > 0x4 || (store == 0x4 && low == 1)) {
             flag = true;
         }
-        if (flag) {     
+        if (flag) {    
+            exp++;
             uint32_t origin = (uint32_t)((sig_grs << 41) >> 41);
             if (origin > origin + 1) {
                 flag2 = true;
@@ -107,7 +108,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
         printf("flag = %d\n", flag);
         printf("flag2 = %d\n", flag2);
         if (flag2) {
-            exp++;
             sig_grs >>= 1;
             if (exp >= 0xff) {   // 无穷大
                  return sign ?  (0xff000000 >> 1 | 0x80000000) : (0xff000000 >> 1);

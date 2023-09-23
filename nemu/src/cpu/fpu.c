@@ -56,7 +56,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		// normalize toward left
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		{
-			sig_grs << 1;
+			sig_grs <<= 1;
 		}
 		if (exp == 0)
 		{
@@ -92,7 +92,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
         }
         if (flag2) {
             exp++;
-            sig_grs >> 1;
+            sig_grs >>= 1;
             if (exp >= 0xff) {   // 无穷大
                  return sign ?  (0xff000000 >> 1 | 0x80000000) : (0xff000000 >> 1);
             }

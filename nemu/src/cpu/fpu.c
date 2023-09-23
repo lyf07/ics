@@ -27,7 +27,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			sig_grs >>= 1;
 			sig_grs |= sticky;
 		}
-        printf("1: sign = 0x%u, exp = 0x%u, sig_grs = 0x%llx, sticky = 0x%x\n", sign, exp, sig_grs, sticky);
 		if (exp >= 0xff)
 		{
 			/* TODO: assign the number to infinity */
@@ -75,6 +74,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 
 	if (!overflow)
 	{
+	    printf("1: sign = 0x%u, exp = 0x%u, sig_grs = 0x%llx, sticky = 0x%x\n", sign, exp, sig_grs, sticky);
 		/* TODO: round up and remove the GRS bits */
         uint32_t store = (sig_grs << 61) >> 61;
         sig_grs >>= 3;

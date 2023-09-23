@@ -98,6 +98,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
         }
         if (flag) {    
             uint32_t origin = (uint32_t)((sig_grs << 41) >> 41);
+            printf("origin = 0x%x, origin + 1 = 0x%x\n", origin, origin + 1);
             if (origin > origin + 1) {
                 flag2 = true;
                 exp++;

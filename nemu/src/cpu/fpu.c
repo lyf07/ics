@@ -90,6 +90,8 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
                 flag2 = true;
             }
         }
+        printf("flag = %d\n", flag);
+        printf("flag2 = %d\n", flag2);
         if (flag2) {
             exp++;
             sig_grs >>= 1;

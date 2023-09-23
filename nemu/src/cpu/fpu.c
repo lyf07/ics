@@ -15,6 +15,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
     printf("0: sign = 0x%u, exp = 0x%u, sig_grs = 0x%llx\n", sign, exp, sig_grs);
 	if ((sig_grs >> (23 + 3)) > 1 || exp < 0)
 	{
+	    printf("case1\n");
 		// normalize toward right
 		while ((((sig_grs >> (23 + 3)) > 1) && exp < 0xff) // condition 1
 			   ||										   // or
@@ -52,6 +53,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	}
 	else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 	{
+	    printf("case2\n");
 		// normalize toward left
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		{
@@ -68,6 +70,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	}
 	else if (exp == 0 && sig_grs >> (23 + 3) == 1)
 	{
+	    printf("case3\n");
 		// two denormals result in a normal
 		exp++;
 	}

@@ -104,6 +104,8 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	f.sign = sign;
 	f.exponent = (uint32_t)(exp & 0xff);
 	f.fraction = sig_grs; // here only the lowest 23 bits are kept
+	printf("My answer is 0x%x\n", f.fval);
+	printf("===============\n");
 	return f.val;
 }
 
@@ -261,6 +263,11 @@ CORNER_CASE_RULE corner_mul[] = {
 // a * b
 uint32_t internal_float_mul(uint32_t b, uint32_t a)
 {
+    
+    FLOAT c, d, e;
+    c.val = b, d.val = a;
+    e.fval = c.fval * d.fval;
+    printf("System's answer is 0x%x\n", e.fval);
 	int i = 0;
 	for (; i < sizeof(corner_mul) / sizeof(CORNER_CASE_RULE); i++)
 	{

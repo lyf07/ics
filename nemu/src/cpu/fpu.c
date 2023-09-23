@@ -89,7 +89,9 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
             if (origin > origin + 1) {
                 flag2 = true;
             }
+            sig_grs += 1;
         }
+        
         printf("flag = %d\n", flag);
         printf("flag2 = %d\n", flag2);
         if (flag2) {
@@ -99,7 +101,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
                  return sign ?  (0xff000000 >> 1 | 0x80000000) : (0xff000000 >> 1);
             }
         }
-        sig_grs += 1;
         sig_grs &= 0x70000; // 丢弃隐藏的最高位
 	}
 

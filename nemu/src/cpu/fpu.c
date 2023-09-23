@@ -85,7 +85,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
         uint32_t store = (sig_grs << 61) >> 61;
         sig_grs >>= 3;
         uint32_t low = sig_grs & 0x1;
-        printf("store = 0x%x, sig_grs = 0x%x\n", store, sig_grs);
+        printf("store = 0x%x, sig_grs = 0x%llx\n", store, sig_grs);
         bool flag = false;   // 是否进位
         bool flag2 = false; // 是否破坏规格化
         if (store > 0x4 || (store == 0x4 && low == 1)) {

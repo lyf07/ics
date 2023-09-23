@@ -304,10 +304,10 @@ uint32_t internal_float_mul(uint32_t b, uint32_t a)
 
 	/* TODO: exp_res = ? leave space for GRS bits. */
     exp_res = fa.exponent + fb.exponent - 127 - 23 + 3;
-    // FLOAT c, d, e;
-    // c.val = b, d.val = a;
-    // e.fval = c.fval * d.fval;
-    // printf("System's answer is: sign:0x%x, exp:0x%x, fraction = 0x%x\n", e.sign, e.exponent, e.fraction);
+     FLOAT c, d, e;
+     c.val = b, d.val = a;
+     e.fval = c.fval * d.fval;
+     printf("System's answer is: sign:0x%x, exp:0x%x, fraction = 0x%x\n", e.sign, e.exponent, e.fraction);
 	return internal_normalize(f.sign, exp_res, sig_res);
 }
 

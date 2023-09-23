@@ -22,7 +22,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			   (sig_grs > 0x04 && exp < 0)				   // condition 2
 			   )
 		{
-
+            printf("case1:1\n");
 			/* TODO: shift right, pay attention to sticky bit*/
 			sticky = sticky | (sig_grs & 0x1);
 			sig_grs >>= 1;
@@ -31,11 +31,13 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		}
 		if (exp >= 0xff)
 		{
+		    printf("case1:2\n");
 			/* TODO: assign the number to infinity */
             return sign ?  (0xff000000 >> 1 | 0x80000000) : (0xff000000 >> 1);
 		}
 		if (exp == 0)
 		{
+		    printf("case1:3\n");
 			// we have a denormal here, the exponent is 0, but means 2^-126,
 			// as a result, the significand should shift right once more
 			/* TODO: shift right, pay attention to sticky bit*/
@@ -45,6 +47,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		}
 		if (exp < 0)
 		{
+		    printf("case1:4\n");
 			/* TODO: assign the number to zero */
 			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
 			fflush(stdout);
@@ -58,11 +61,13 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		// normalize toward left
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		{
+		    printf("case2:1\n");
 			sig_grs <<= 1;
 			exp--;
 		}
 		if (exp == 0)
 		{
+		    printf("case2:2\n");
 			// denormal
 			/* TODO: shift right, pay attention to sticky bit*/
             sticky = sig_grs & 0x1;

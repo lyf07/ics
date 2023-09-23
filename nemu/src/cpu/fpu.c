@@ -45,7 +45,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		}
 		if (exp < 0)
 		{
-		    sign *= -1;
+		    return sign ? 0x80000000 : 0;
 // 			exp = -exp;
 		}
 	}

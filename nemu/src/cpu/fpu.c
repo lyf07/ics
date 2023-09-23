@@ -147,7 +147,6 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
     y.val = b;
     g.fval = x.fval + y.fval;
     printf("System's answer is: sign: %d, exp: %d, fraction: 0x%x\n", g.sign, g.exponent, g.fraction);
-    return g.val;
     
     
     // ========= golden key ==========

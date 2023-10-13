@@ -1,6 +1,7 @@
 #ifndef __INSTR_MOV_H__
 #define __INSTR_MOV_H__
 
+#include "../../macro.h"
 make_instr_func(mov_r2rm_b);
 make_instr_func(mov_r2rm_v);
 make_instr_func(mov_rm2r_b);

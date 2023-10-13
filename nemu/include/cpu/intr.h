@@ -2,7 +2,6 @@
 #define __INTR_H__
 
 #include "nemu.h"
-#include "../macro.h"
 #include "device/i8259_pic.h"
 #include "cpu/instr/mov.h"
 

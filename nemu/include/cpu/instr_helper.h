@@ -225,11 +225,7 @@ static inline bool inv_cc();
 
 static inline bool inv_cc()
 {
-	switch(cc) {
-	    case 'e':
-	        return cpu.eflags.ZF == 1;
-	}
-	return false;
+	return cpu.efla
 }
 
 #endif

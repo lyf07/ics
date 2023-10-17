@@ -3,9 +3,12 @@
 Put the implementations of `push' instructions here.
 */
 
+
 static void instr_execute_1op() 
 {
-	opr_src = 
+	operand_read(&opr_src);
+	cpu.esp -= 4;
+	paddr_write(cpu.esp, 4, opr_src.val);
 }
 
 

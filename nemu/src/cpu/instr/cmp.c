@@ -6,7 +6,7 @@ Put the implementations of `cmp' instructions here.
 static void instr_execute_2op() 
 {
 	operand_read(&opr_src);
-	alu_sub(sign_ext(opr_src.val, opr_src.data_size), sign_ext(opr_dest.val, opr_src.data_size), opr_dest.data_size);
+	alu_sub(sign_ext(opr_src.val, opr_src.data_size), sign_ext(opr_dest.val, opr_src.data_size), 16);
 	operand_write(&opr_dest);
 }
 

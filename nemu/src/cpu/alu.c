@@ -20,6 +20,7 @@ void set_PF(uint32_t res) {
 
 void set_ZF(uint32_t res, size_t data_size) {
     res = res & (0xFFFFFFFF >> (32 - data_size));
+    printf("in zf, res = %x\n", res);
     cpu.eflags.ZF = (res == 0);
 }
 	

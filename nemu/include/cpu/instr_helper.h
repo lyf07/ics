@@ -229,6 +229,7 @@ static inline bool inv_cc()
 	switch (cc) {
 	    case (0x74):    return cpu.eflags.ZF == 1;
 	}
+	return false;
 }
 
 #endif

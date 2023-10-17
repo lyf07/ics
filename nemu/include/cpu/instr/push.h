@@ -3,6 +3,6 @@
 /*
 Put the declarations of `push' instructions here.
 */
-make_instru_func(push_r_v);
+make_instr_func(push_r_v);
 
 #endif

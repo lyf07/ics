@@ -225,7 +225,10 @@ static inline bool inv_cc();
 
 static inline bool inv_cc()
 {
-	return false;
+	uint32_t cc = instr_fetch(eip, 1);
+	switch (cc) {
+	    case (0x74):    return cpu.eflags.ZF == 1;
+	}
 }
 
 #endif

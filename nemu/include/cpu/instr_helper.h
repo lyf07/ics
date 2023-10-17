@@ -227,7 +227,7 @@ static inline bool inv_cc()
 {
 	switch(cc) {
 	    case 'e':
-	        return cpu.ZF == 1;
+	        return cpu.eflags.ZF == 1;
 	}
 	return false;
 }

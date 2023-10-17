@@ -230,7 +230,7 @@ static inline bool inv_cc()
 	switch (cc) {
 	    case (0x74):    return cpu.eflags.ZF == 1;
 	    case (0x7e):    return true;
-	    case (0x7f):    return cpu.eflags.ZF == 0 && cpu.eflags.SF == cpu.eflags.OF;
+	    case (0x7f):    return true;
 	}
 	return false;
 }

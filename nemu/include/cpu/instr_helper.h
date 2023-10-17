@@ -225,7 +225,7 @@ static inline bool inv_cc();
 
 static inline bool inv_cc()
 {
-	return cpu.eflags.ZF == 1;
+	return false;
 }
 
 #endif

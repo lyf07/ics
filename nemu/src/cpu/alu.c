@@ -20,7 +20,6 @@ void set_PF(uint32_t res) {
 
 void set_ZF(uint32_t res, size_t data_size) {
     res = res & (0xFFFFFFFF >> (32 - data_size));
-    printf("in zf, res = %x\n", res);
     cpu.eflags.ZF = (res == 0);
 }
 	
@@ -292,13 +291,8 @@ uint32_t alu_and(uint32_t src, uint32_t dest, size_t data_size)
 #else
     uint32_t res = dest & src;
     set_PF(res);                       // 偶数个1时，置1 
-    printf("res = %x\n",res);
-    printf("data_size = %x\n",data_size);
 	set_ZF(res, data_size);
 	set_SF(res, data_size);
-	printf("sf = %d\n",cpu.eflags.SF);
-	printf("Of, of = %d\n",cpu.eflags.OF);
-	printf("in zf, zf = %d\n",cpu.eflags.ZF);
 	return res & (0xFFFFFFFF >> (32 - data_size));
 #endif
 }

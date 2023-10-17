@@ -225,9 +225,10 @@ static inline bool inv_cc();
 
 static inline bool inv_cc()
 {
-	printf("Please implement cc condition in instr_helper.h\n");
-	fflush(stdout);
-	assert(0);
+	switch(cc) {
+	    case 'e':
+	        return cpu.ZF == 1;
+	}
 	return false;
 }
 

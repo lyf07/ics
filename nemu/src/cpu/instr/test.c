@@ -8,7 +8,7 @@ static void instr_execute_2op()
 	printf("ZF = %d, OF = %d, SF = %d\n", cpu.eflags.ZF, cpu.eflags.OF, cpu.eflags.SF);
 	printf("opr_src: %u\n", opr_src.val);
 	printf("opr_test: %u\n\n", opr_dest.val);
-	alu_and(opr_src.val, opr_dest.val, 8);
+	alu_and(opr_src.val, opr_dest.val, 16);
 	operand_write(&opr_dest);
 }
 

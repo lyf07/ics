@@ -33,6 +33,7 @@ void print_asm_3(char *instr, char *suffix, uint8_t len, OPERAND *opr_1, OPERAND
 		concat(decode_data_size_, suffix)                       \
 		concat3(decode_operand, _, src_type)                \
 		print_asm_1(#inst_name, #cc, len, &opr_src);    \
+		printf("in hone,zf = %d, sf = %d, of = %d\n",cpu.eflags.ZF,cpu.eflags.SF,cpu.eflags.OF);\
 		if (concat(condition_, cc))                             \
 			instr_execute_1op_cc_pass();                        \
 		else                                                    \
@@ -226,9 +227,15 @@ static inline bool inv_cc();
 static inline bool inv_cc()
 {
 	uint32_t cc = instr_fetch(cpu.eip, 1);
+	printf("in ins,Zf = %d\n",cpu.eflags.ZF);
+	printf("in ins,sf = %d\n",cpu.eflags.SF);
+	printf("in ins, Of, of = %d\n",cpu.eflags.OF);
 	switch (cc) {
 	    case (0x74):    return cpu.eflags.ZF == 1;
-	    case (0x7f):    return cpu.eflags.ZF == 0 && cpu.eflags.SF == cpu.eflags.OF;
+	    case (0x7f):   { 
+	        return cpu.eflags.ZF == 0 && cpu.eflags.SF == cpu.eflags.OF;
+	        
+	    }
 	}
 	return false;
 }

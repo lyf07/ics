@@ -27,7 +27,7 @@ make_instr_func(jmp_short)
         rel.sreg = SREG_CS;
         rel.data_size = 8;
         rel.addr = eip + 1;
-        printf("data_size = 0x%x\n", data_size);
+        // printf("data_size = 0x%x\n", data_size);
         operand_read(&rel);
 
         int offset = sign_ext(rel.val, 8);

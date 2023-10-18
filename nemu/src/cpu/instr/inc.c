@@ -10,3 +10,4 @@ static void instr_execute_1op(){
 
 
 make_instr_impl_1op(inc, rm, w);
+make_instr_impl_1op(inc, rm, b);

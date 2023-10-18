@@ -21,6 +21,7 @@ void operand_read(OPERAND *opr)
 		{
 		    printf("1: %u, 2: %u \n", opr->addr % 4, opr->addr / 4);
 			opr->val = cpu.gpr[opr->addr % 4]._8[opr->addr / 4];
+			printf("3:0x%x",opr->val = cpu.gpr[opr->addr % 4]._8[opr->addr / 4]);
 		}
 		else
 		{

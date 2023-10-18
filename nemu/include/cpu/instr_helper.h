@@ -233,6 +233,10 @@ static inline bool inv_cc()
 	    case (0x76):    return cpu.eflags.CF == 1 || cpu.eflags.ZF == 1;
 	    case (0x7e):    return cpu.eflags.ZF == 1 || cpu.eflags.SF != cpu.eflags.OF;
 	    case (0x7f):    return cpu.eflags.ZF == 0 && cpu.eflags.SF == cpu.eflags.OF;
+	    case (0x0F): {
+	        cc = instr_fetcjh(cpu.eip + 1, 1);
+	        case (0x8e):    return cpu.eflags.ZF == 1 || cpu.eflags.SF != cpu.eflags.OF;
+	    }
 	}
 	return false;
 }

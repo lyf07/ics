@@ -188,9 +188,8 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_sub(src, dest, data_size);
 #else
     uint32_t res = dest - src;
-    // printf("0:res = 0x%x\n", res);
+    printf("src = 0x%x, dest = 0x%x\n", src, dest);
     set_CF_sub(res, dest, data_size);   // 设置标志位
-    // printf("1:res = 0x%x\n", res);
 	set_PF(res);                       // 偶数个1时，置1 
 	set_ZF(res, data_size);
 	set_SF(res, data_size);

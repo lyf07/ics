@@ -7,8 +7,6 @@ static void instr_execute_1op() {
 
     int offset = sign_ext(opr_src.val, opr_src.data_size);
     cpu.eip += offset;
-
-    return 1 + opr_src.data_size / 8;
 }
 
 

@@ -10,19 +10,20 @@ uint8_t hw_mem[MEM_SIZE_B];
 uint32_t hw_mem_read(paddr_t paddr, size_t len)
 {
 	uint32_t ret = 0;
+	printf("hwmem+paddr = 0x%x, len = %u\n",paddr,len);
 	memcpy(&ret, hw_mem + paddr, len);
 	return ret;
 }
 
 void hw_mem_write(paddr_t paddr, size_t len, uint32_t data)
 {
-    printf("hwmem+paddr = 0x%x, data = 0x%x, len = %u\n",paddr,data,len);
 	memcpy(hw_mem + paddr, &data, len);
 }
 
 uint32_t paddr_read(paddr_t paddr, size_t len)
 {
 	uint32_t ret = 0;
+	printf("here!\n");
 	ret = hw_mem_read(paddr, len);
 	return ret;
 }

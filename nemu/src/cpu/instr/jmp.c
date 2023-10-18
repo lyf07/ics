@@ -35,6 +35,7 @@ make_instr_func(jmp_short)
         print_asm_1("jmp", "", 1 + data_size / 8, &rel);
         printf("eip = 0x%x, offset = 0x%x\n", cpu.eip, offset);
         cpu.eip += offset;
+        printf("eip = 0x%x\n",cpu.eip);
 
         return 1 + data_size / 8;
 }

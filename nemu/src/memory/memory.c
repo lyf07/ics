@@ -23,7 +23,6 @@ void hw_mem_write(paddr_t paddr, size_t len, uint32_t data)
 uint32_t paddr_read(paddr_t paddr, size_t len)
 {
 	uint32_t ret = 0;
-	printf("here!\n");
 	ret = hw_mem_read(paddr, len);
 	return ret;
 }

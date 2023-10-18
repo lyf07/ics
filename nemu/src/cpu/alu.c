@@ -193,8 +193,6 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 	set_ZF(res, data_size);
 	set_SF(res, data_size);
 	set_OF_sub(res, src, dest, data_size);
-	printf("res = 0x%x, dest = 0x%x, src = 0x%x\n", res, dest, src);
-	printf("ZF = 0x%x\n", cpu.eflags.ZF);
     return res & (0xFFFFFFFF >> (32 - data_size)); // 高位清零
 #endif
 }

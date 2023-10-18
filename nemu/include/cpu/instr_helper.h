@@ -1,8 +1,6 @@
 #ifndef __INSTR_HELPER_H__
 #define __INSTR_HELPER_H__
 
-// the type of an instruction entry
-typedef int (*instr_func)(uint32_t eip, uint8_t opcode);
 
 void print_asm_0(char *instr, char *suffix, uint8_t len);
 void print_asm_1(char *instr, char *suffix, uint8_t len, OPERAND *opr_1);
@@ -231,10 +229,12 @@ static inline bool inv_cc()
 	switch (cc) {
 	    case (0x74):    return cpu.eflags.ZF == 1;
 	    case (0x75):    return cpu.eflags.ZF == 0;
+	    case (0x76):    return cpu.eflags.CF == 1 || cpu.eflags.ZF == 1;
 	    case (0x7e):    return cpu.eflags.ZF == 1 || cpu.eflags.SF != cpu.eflags.OF;
 	    case (0x7f):    return cpu.eflags.ZF == 0 && cpu.eflags.SF == cpu.eflags.OF;
 	}
 	return false;
 }
+
 
 #endif

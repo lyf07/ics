@@ -19,6 +19,7 @@ void operand_read(OPERAND *opr)
 	case OPR_REG:
 		if (opr->data_size == 8)
 		{
+		    printf("1: %u, 2: %u \n", opr->addr % 4, opr->addr / 4);
 			opr->val = cpu.gpr[opr->addr % 4]._8[opr->addr / 4];
 		}
 		else

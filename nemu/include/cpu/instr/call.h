@@ -3,5 +3,6 @@
 /*
 Put the declarations of `call' instructions here.
 */
+make_instr_func(call_i_near);
 
 #endif

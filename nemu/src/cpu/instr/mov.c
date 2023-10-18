@@ -3,9 +3,7 @@
 static void instr_execute_2op() 
 {
 	operand_read(&opr_src);
-	printf("in mov: src = 0x%x\n", opr_src.val);
 	opr_dest.val = opr_src.val;
-	printf("in mov: dest = 0x%x\n", opr_dest.val);
 	operand_write(&opr_dest);
 }
 

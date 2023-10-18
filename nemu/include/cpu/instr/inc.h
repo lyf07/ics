@@ -3,9 +3,8 @@
 /*
 Put the declarations of `inc' instructions here.
 */
-void
 
-make_instr_impl_1op(inc, rm, w);
+make_instr_func(inc_rm_w);
 
 
 #endif

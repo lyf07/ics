@@ -9,4 +9,4 @@ static void instr_execute_1op(){
 }
 
 
-make_instr_func(inc_rm_w);
+make_instr_impl_1op(inc, rm, w);

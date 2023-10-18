@@ -1,6 +1,7 @@
 #ifndef __INSTR_HELPER_H__
 #define __INSTR_HELPER_H__
 
+typedef int (*instr_func)(uint32_t eip, uint8_t opcode);
 
 void print_asm_0(char *instr, char *suffix, uint8_t len);
 void print_asm_1(char *instr, char *suffix, uint8_t len, OPERAND *opr_1);

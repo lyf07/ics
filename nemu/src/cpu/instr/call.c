@@ -2,11 +2,20 @@
 /*
 Put the implementations of `call' instructions here.
 */
-static void instr_execute_1op() {
-    operand_read(&opr_src);
-    int offset = sign_ext(opr_src.val, opr_src.data_size);
-    cpu.eip += offset;
+make_instr_func(call_i_near) {
+    
+	cpu.esp -= 4;
+	paddr_write(cpu.esp, 4, cpu.eip + 5);   // 5 = 1(call's opcode) + 4(16 immediate num)
+    
+    
+    OPERAND opr;
+    opr.type = OPR_IMM;
+    opr.addr = cpu.eip + 1;
+    opr.data_size = 16;
+    operand_read(&opr);
+    
+    cpu.eip += sign_ext(opr.val, opr.data_size);
+    
+    return 5;
+    
 }
-
-
-make_instr_impl_1op(call, i, near) 

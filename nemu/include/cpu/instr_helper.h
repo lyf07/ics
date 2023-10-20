@@ -228,7 +228,6 @@ static inline bool inv_cc()
     
     
     
-    #if 0
 	uint32_t cc = instr_fetch(cpu.eip, 1);
 	
 	switch(cc)
@@ -290,7 +289,6 @@ static inline bool inv_cc()
 	    }
 	    default: return 0;
 	}
-	#endif
 }
 
 

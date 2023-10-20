@@ -11,7 +11,7 @@ make_instr_func(call_i_near) {
     OPERAND opr;
     opr.type = OPR_IMM;
     opr.addr = cpu.eip + 1;
-    opr.data_size = 16;
+    opr.data_size = 32;
     operand_read(&opr);
     
     cpu.eip += sign_ext(opr.val, opr.data_size);

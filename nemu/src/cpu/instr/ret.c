@@ -8,6 +8,6 @@ make_instr_func(ret) {
     opr.type = OPR_MEM;
     opr.data_size = data_size;
     operand_read(&opr);
-    cpu.eip = opr.val - 1;
+    cpu.eip = opr.val;
     return 1;
 }

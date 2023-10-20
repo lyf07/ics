@@ -7,6 +7,6 @@ make_instr_func(ret) {
     opr.addr = cpu.esp;
     opr.type = OPR_MEM;
     operand_read(&opr);
-    cpu.eip = opr.val;
+    cpu.eip = opr.val - 1;
     return 1;
 }

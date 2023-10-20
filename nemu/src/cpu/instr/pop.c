@@ -12,7 +12,6 @@ static void instr_execute_1op()
 	opr_src.val = opr.val;
 	operand_write(&opr_src);
 	cpu.esp += 4;
-	return 1;
 }
 
 

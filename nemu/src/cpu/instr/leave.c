@@ -7,6 +7,7 @@ make_instr_func(leave) {
     OPERAND opr;
     opr.type = OPR_MEM;
     opr.addr = cpu.ebp;
+    opr.data_size = data_size;
     operand_read(&opr);
     cpu.ebp = opr.val;
     cpu.esp += 4;

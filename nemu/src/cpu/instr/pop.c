@@ -8,6 +8,7 @@ static void instr_execute_1op()
 	OPERAND opr;
 	opr.type = OPR_MEM;
 	opr.addr = cpu.esp;
+	opr.data_size = 32;
 	operand_read(&opr);
 	opr_src.val = opr.val;
 	operand_write(&opr_src);

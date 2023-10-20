@@ -224,73 +224,22 @@ static inline bool inv_cc();
 
 static inline bool inv_cc()
 {
-    
-    
-    
-    
 	uint32_t cc = instr_fetch(cpu.eip, 1);
-	
-	switch(cc)
-	{
-	    case 0x74:{
-	        if (cpu.eflags.ZF) {
-        		return 1;
-        	}
-        	return 0;
-        	break;
-	    }
-	    case 0x75:{
-	        if (cpu.eflags.ZF == 0) {
-        		return 1;
-        	}
-        	return 0;
-	    }
-	    case 0x76:{//CF=1 or ZF=1
-        	if (cpu.eflags.CF || cpu.eflags.ZF) {
-        	    printf("jna(unsigned):cf%d\tzf%d\n", cpu.eflags.CF, cpu.eflags.ZF);
-        		return 1;
-        	}
-        	return 0;
-	    }
-	    case 0x86:{//CF=1 or ZF=1
-        	if (cpu.eflags.CF || cpu.eflags.ZF) {
-        	    printf("jna(unsigned):cf%d\tzf%d\n", cpu.eflags.CF, cpu.eflags.ZF);
-        		return 1;
-        	}
-        	return 0;
-	    }
-	    case 0x7c:
-	    case 0x8c:{//jl SF<>OF
-	        printf("jl(signed):sf%d\tof%d\n", cpu.eflags.SF, cpu.eflags.OF);
-	        if (cpu.eflags.SF != cpu.eflags.OF) {
-	            //printf("jl(signed):sf%d\tof%d\n", cpu.eflags.SF, cpu.eflags.OF);
-        		return 1;
-        	}
-        	return 0;
-	    }
-	    case 0x7d:{//jge SF=OF
-	        if (cpu.eflags.SF == cpu.eflags.OF) {
-        		return 1;
-        	}
-        	return 0;
-	    }
-	    case 0x7e:{
-	        if (cpu.eflags.ZF || cpu.eflags.SF!=cpu.eflags.OF) {
-	            //printf("jle(signed):zf%d\tsf%d\tof%d\n", cpu.eflags.ZF,cpu.eflags.SF, cpu.eflags.OF);
-        		return 1;
-        	}//ZF=1 or SF<>OF
-        	return 0;
-	    }
-	    case 0x7f:{
-	        if (cpu.eflags.ZF==0&&cpu.eflags.SF==cpu.eflags.OF) {
-        		return 1;
-        	}
-        	return 0;
-	    }
-	    default: return 0;
+// 	printf("in cc, ZF = %d, SF = %d, OF = %d\n\n\n", cpu.eflags.ZF, cpu.eflags.SF, cpu.eflags.OF);
+// 	printf("cc = 0x%x\n", cc) ;
+	switch (cc) {
+	    case (0x74):    return cpu.eflags.ZF == 1;
+	    case (0x75):    return cpu.eflags.ZF == 0;
+	    case (0x76):    return cpu.eflags.CF == 1 || cpu.eflags.ZF == 1;
+	    case (0x7c):    return cpu.eflags.SF != cpu.eflags.OF;
+	    case (0x7e):    return cpu.eflags.ZF == 1 || cpu.eflags.SF != cpu.eflags.OF;
+	    case (0x7f):    return cpu.eflags.ZF == 0 && cpu.eflags.SF == cpu.eflags.OF;
+	    case (0x7d):    return cpu.eflags.SF == cpu.eflags.OF;
+	    case (0x8c):    return cpu.eflags.SF != cpu.eflags.OF;
+	    case (0x8e):    return cpu.eflags.ZF == 1 || cpu.eflags.SF != cpu.eflags.OF;
 	}
+	return false;
 }
-
 
 
 #endif

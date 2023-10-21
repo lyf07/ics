@@ -61,10 +61,10 @@ instr_func opcode_entry[256] = {
     /* 0xe4 - 0xe7*/ inv, inv, inv, inv,
     /* 0xe8 - 0xeb*/ call_i_near, __ref_jmp_near, inv, __ref_jmp_short,
     /* 0xec - 0xef*/ inv, inv, inv, inv,
-    /* 0xf0 - 0xf3*/ inv, break_point, inv, __ref_rep_repe,
+    /* 0xf0 - 0xf3*/ inv, break_point, inv, rep_repe,
     /* 0xf4 - 0xf7*/ hlt, inv, __ref_group_3_b, __ref_group_3_v,
     /* 0xf8 - 0xfb*/ clc, inv, inv, inv,
-    /* 0xfc - 0xff*/ __ref_cld, inv, inv, __ref_group_5_indirect,
+    /* 0xfc - 0xff*/ cld, inv, inv, __ref_group_5_indirect,
 };
 
 /* 0x80 */

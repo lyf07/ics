@@ -241,6 +241,7 @@ static inline bool inv_cc()
 	                    case (0x86):    return cpu.eflags.CF == 1 || cpu.eflags.ZF == 1;
 	            	    case (0x8c):    return cpu.eflags.SF != cpu.eflags.OF;
 	                    case (0x8e):    return cpu.eflags.ZF == 1 || cpu.eflags.SF != cpu.eflags.OF;
+	                    case (0x95):    return cpu.eflags.ZF == 0;
 	        }
 	    }
 	}

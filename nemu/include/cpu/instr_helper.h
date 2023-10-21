@@ -235,7 +235,7 @@ static inline bool inv_cc()
 	    case (0x74):    return cpu.eflags.ZF == 1;
 	    case (0x75):    return cpu.eflags.ZF == 0;
 	    case (0x76):    return cpu.eflags.CF == 1 || cpu.eflags.ZF == 1;
-	    case (0x77):    return cpu.eflags.CF == 0 && ZF == 0;
+	    case (0x77):    return cpu.eflags.CF == 0 && cpu.eflags.ZF == 0;
 	    case (0x78):    return cpu.eflags.SF == 1;
 	    case (0x79):    return cpu.eflags.SF == 0;
 	    case (0x7a):    return cpu.eflags.PF == 1;

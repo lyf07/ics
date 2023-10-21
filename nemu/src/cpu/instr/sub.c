@@ -15,23 +15,6 @@ make_instr_impl_2op(sub, r, rm, v)
 make_instr_impl_2op(sub, i, rm, bv)
 make_instr_impl_2op(sub, rm, r, v)
 
-// make_instr_func(sub_i2rm_bv)
-// {
-//     OPERAND i, rm;
-//     i.data_size = 8;
-//     i.type = OPR_IMM;
-//     i.addr = eip + 2;
-//     operand_read(&i);
-    
-//     rm.data_size = data_size;
-//     rm.type = OPR_REG;
-//     rm.addr = REG_AH;
-//     operand_read(&rm);
 
-//     rm.val -= i.val;
-//     operand_write(&rm);
-// 	print_asm_2("sub", "", 3, &rm, &i);
-//     return 3;
-// }
 
 

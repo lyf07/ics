@@ -228,10 +228,18 @@ static inline bool inv_cc()
 // 	printf("in cc, ZF = %d, SF = %d, OF = %d\n\n\n", cpu.eflags.ZF, cpu.eflags.SF, cpu.eflags.OF);
 // 	printf("cc = 0x%x\n", cc) ;
 	switch (cc) {
+	    case (0x70):    return cpu.eflags.OF == 1;
+	    case (0x71):    return cpu.eflags.OF == 0;
 	    case (0x72):    return cpu.eflags.CF == 1;
+	    case (0x73):    return cpu.eflags.CF == 0;
 	    case (0x74):    return cpu.eflags.ZF == 1;
 	    case (0x75):    return cpu.eflags.ZF == 0;
 	    case (0x76):    return cpu.eflags.CF == 1 || cpu.eflags.ZF == 1;
+	    case (0x77):    return cpu.eflags.CF == 0 && ZF == 0;
+	    case (0x78):    return cpu.eflags.SF == 1;
+	    case (0x79):    return cpu.eflags.SF == 0;
+	    case (0x7a):    return cpu.eflags.PF == 1;
+	    case (0x7b):    return cpu.eflags.PF == 0;
 	    case (0x7c):    return cpu.eflags.SF != cpu.eflags.OF;
 	    case (0x7e):    return cpu.eflags.ZF == 1 || cpu.eflags.SF != cpu.eflags.OF;
 	    case (0x7f):    return cpu.eflags.ZF == 0 && cpu.eflags.SF == cpu.eflags.OF;

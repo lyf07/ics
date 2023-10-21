@@ -37,3 +37,25 @@ make_instr_func(jmp_short)
 
         return 1 + 8 / 8;
 }
+
+make_instr_func(jmp_near_indirect) {
+    int len = 1;
+    decode_data_size_v
+    decode_operand_rm
+    operand_read(&opr_src);
+    cpu.eip = sign_ext(opr_src.val, opr_src.data_size) - len;
+    return len;
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+

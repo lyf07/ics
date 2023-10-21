@@ -240,6 +240,7 @@ static inline bool inv_cc()
 	        switch(cc) {
 	                    case (0x84):    return cpu.eflags.ZF == 1;
 	                    case (0x86):    return cpu.eflags.CF == 1 || cpu.eflags.ZF == 1;
+	                    case (0x87):    return cpu.eflags.CF == 0 && cpu.eflags.ZF == 0;
 	            	    case (0x8c):    return cpu.eflags.SF != cpu.eflags.OF;
 	                    case (0x8e):    return cpu.eflags.ZF == 1 || cpu.eflags.SF != cpu.eflags.OF;
 	                    case (0x95):    return cpu.eflags.ZF == 0;
